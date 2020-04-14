@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ứng dụng quản lí sản phẩm</title>
+</head>
+<body>
+<input id="newProduct" type="text">
+<button onclick="addProduct()">Thêm sản phẩm</button>
+<button onclick="showListProduct()">Hiện danh sách</button>
+<div id="listProduct"></div>
+<script>
+    let listProduct=[];
+    function addNewProduct(newProduct) {
+        if (newProduct.length>=2){
+            listProduct.push(newProduct);
+            return true;
+        }
+        else {return false};
+
+    }
+
+    function addProduct() {
+        let newProduct = document.getElementById("newProduct").value;
+        if(addNewProduct(newProduct)){
+            document.getElementById("newProduct").value = "";
+        }
+        showListProduct();
+    }
+    function showListProduct() {
+        let data = "<table border='2px'>";
+        data+="<tr><td>STT</td><td>Tên sản phẩm</td><td>Edit</td><td>Delete</td></tr>"
+        for (let i= 0; i<listProduct.length;i++){
+            data+= "<tr>" +
+                '<td>'+(i+1)+'</td>'+
+                '<td>' + listProduct[i]+'</td>'
+                +'<td><button onclick="editProduct('+i+')">Edit</button></td>'
+                +'<td><button onclick="deleteProduct('+i+')">Delete</button></td>'+
+                '</tr>';
+        }
+        data+="</table>";
+        document.getElementById("listProduct").innerHTML= data;
+    }
+    function editProduct(index) {
+        let newName = prompt("Đây là chức năng sửa", listProduct[index]);
+        listProduct[index] =newName;
+        showListProduct();
+    }
+
+    function deleteProduct(index) {
+        let conf = confirm("Bạn có muốn xóa "+ listProduct[index]);
+        if (conf==true){
+            listProduct.splice(index, 1);
+        }
+        showListProduct();
+    }
+</script>
+
+</body>
+</html>
